@@ -3,7 +3,7 @@
 namespace WebSites.Api.Controllers;
 
 [Route("health-checks")]
-public class HealthChecksController
+public sealed class HealthChecksController
 {
     [HttpGet]
     public void Get()

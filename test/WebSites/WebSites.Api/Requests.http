@@ -1,6 +1,0 @@
-@api_url = http://localhost:5226
-
-GET {{api_url}}/health-checks/
-Accept: application/json
-
-###
