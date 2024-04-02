@@ -1,0 +1,19 @@
+GET {{url}}/with-api-controller-attribute/without-parameter
+
+###
+
+POST {{url}}/with-api-controller-attribute/without-parameter
+
+###
+
+PUT {{url}}/with-api-controller-attribute/without-parameter
+
+###
+
+PUT {{url}}/with-api-controller-attribute/without-parameter
+
+###
+
+DELETE {{url}}/with-api-controller-attribute/without-parameter
+
+###

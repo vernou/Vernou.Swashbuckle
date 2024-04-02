@@ -1,0 +1,28 @@
+GET {{url}}/with-api-controller-attribute/with-parameter?id=invalid
+
+###
+
+POST {{url}}/with-api-controller-attribute/with-parameter
+Content-Type: application/json
+
+invalid
+
+###
+
+PUT {{url}}/with-api-controller-attribute/with-parameter/invalid
+Content-Type: application/json
+
+{"id":42}
+
+###
+
+PUT {{url}}/with-api-controller-attribute/with-parameter/42
+Content-Type: application/json
+
+invalid
+
+###
+
+DELETE {{url}}/with-api-controller-attribute/with-parameter/invalid
+
+###
