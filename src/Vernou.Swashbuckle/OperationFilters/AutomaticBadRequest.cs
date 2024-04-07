@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -10,15 +11,25 @@ using System.Linq;
 
 namespace Vernou.Swashbuckle.OperationFilters
 {
+    /// <summary>
+    /// The operation filter <see cref="AutomaticBadRequest"/> add a bad request response with the schema <see cref="ValidationProblemDetails"/>
+    /// to operations generated from an controller action that had a parameter and can return
+    /// <see href="https://learn.microsoft.com/en-us/aspnet/core/web-api#automatic-http-400-responses">a automatic bad request</see>.
+    /// </summary>
     public sealed class AutomaticBadRequest : IOperationFilter
     {
         private readonly IServiceProvider _serviceProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutomaticBadRequest"/> class.
+        /// </summary>
+        /// <param name="serviceProvider"><see cref="IServiceProvider"/> from <see cref="IHost"/>.</param>
         public AutomaticBadRequest(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
+        /// <inheritdoc/>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if(HasParameter(operation) && HasModelStateInvalidFilter(context.ApiDescription.ActionDescriptor))
@@ -50,9 +61,9 @@ namespace Vernou.Swashbuckle.OperationFilters
         {
             if(actionDescriptor is ControllerActionDescriptor des)
             {
-                foreach(var fm in des.FilterDescriptors)
+                foreach(var fd in des.FilterDescriptors)
                 {
-                    if(fm.Filter is IFilterFactory ff)
+                    if(fd.Filter is IFilterFactory ff)
                     {
                         var f = ff.CreateInstance(_serviceProvider);
                         if(f is ModelStateInvalidFilter)
